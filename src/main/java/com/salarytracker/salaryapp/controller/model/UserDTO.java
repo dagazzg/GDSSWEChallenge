@@ -1,10 +1,10 @@
 package com.salarytracker.salaryapp.controller.model;
 
-public class User {
+public class UserDTO {
     private String name;
-    private double salary;
+    private Double salary;
 
-    public User(String name, double salary) {
+    public UserDTO(String name, Double salary) {
         this.name = name;
         this.salary = salary;
     }
@@ -17,11 +17,11 @@ public class User {
         this.name = name;
     }
 
-    public double getSalary() {
+    public Double getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(Double salary) {
         this.salary = salary;
     }
 }

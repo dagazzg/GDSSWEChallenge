@@ -3,20 +3,20 @@ package com.salarytracker.salaryapp.controller.model;
 import java.util.List;
 
 public class UserResponse {
-    private List<User> results;
+    private List<UserDTO> results;
 
     public UserResponse() {
     }
 
-    public UserResponse(List<User> results) {
+    public UserResponse(List<UserDTO> results) {
         this.results = results;
     }
 
-    public List<User> getResults() {
+    public List<UserDTO> getResults() {
         return results;
     }
 
-    public void setResults(List<User> results) {
+    public void setResults(List<UserDTO> results) {
         this.results = results;
     }
 }

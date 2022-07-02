@@ -13,7 +13,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     EntityManager entityManager;
 
     @Override
-    public List<User> findBySalary(Long min, Long max) {
+    public List<User> findBySalary(Double min, Double max) {
         Query query = entityManager.createNativeQuery("SELECT * FROM salaryApp.user as user" +
                 "WHERE user.salary >= ? AND" +
                 "user.salary <= ?");
