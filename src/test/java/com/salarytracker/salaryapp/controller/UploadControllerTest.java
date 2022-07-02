@@ -1,6 +1,6 @@
-package com.salarytracker.salaryApp.controller;
+package com.salarytracker.salaryapp.controller;
 
-import com.salarytracker.salaryApp.service.UploadService;
+import com.salarytracker.salaryapp.service.UploadService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UploadController.class)
-public class UploadControllerTest {
+class UploadControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -23,7 +23,7 @@ public class UploadControllerTest {
 
     @Test
     @WithMockUser(username = "admin", password = "test1234", roles = "ADMIN")
-    public void postUploadTest() throws Exception {
+    void postUploadTest() throws Exception {
         mockMvc.perform(post("/upload")
                         .contentType("multipart/form-data")
                         .with(csrf()))

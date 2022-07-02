@@ -1,6 +1,6 @@
-package com.salarytracker.salaryApp.controller;
+package com.salarytracker.salaryapp.controller;
 
-import com.salarytracker.salaryApp.controller.model.UploadResponse;
+import com.salarytracker.salaryapp.controller.model.UploadResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 

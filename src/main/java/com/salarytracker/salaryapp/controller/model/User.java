@@ -1,10 +1,10 @@
-package com.salarytracker.salaryApp.repository;
+package com.salarytracker.salaryapp.controller.model;
 
-public class UserDAO {
-    String name;
-    double salary;
+public class User {
+    private String name;
+    private double salary;
 
-    public UserDAO(String name, double salary) {
+    public User(String name, double salary) {
         this.name = name;
         this.salary = salary;
     }

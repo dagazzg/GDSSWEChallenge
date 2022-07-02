@@ -1,9 +1,9 @@
-package com.salarytracker.salaryApp.controller.model;
+package com.salarytracker.salaryapp.controller.model;
 
 import java.util.List;
 
 public class UserResponse {
-    List<User> results;
+    private List<User> results;
 
     public UserResponse() {
     }

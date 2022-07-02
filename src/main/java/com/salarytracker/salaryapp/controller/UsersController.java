@@ -1,6 +1,6 @@
-package com.salarytracker.salaryApp.controller;
+package com.salarytracker.salaryapp.controller;
 
-import com.salarytracker.salaryApp.controller.model.UserResponse;
+import com.salarytracker.salaryapp.controller.model.UserResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

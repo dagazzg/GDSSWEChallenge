@@ -1,7 +1,7 @@
-package com.salarytracker.salaryApp.controller.model;
+package com.salarytracker.salaryapp.controller.model;
 
 public class UploadResponse {
-    int success;
+    private int success;
 
     public UploadResponse(int success) {
         this.success = success;
