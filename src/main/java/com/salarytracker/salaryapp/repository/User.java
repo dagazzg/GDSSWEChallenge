@@ -3,23 +3,23 @@ package com.salarytracker.salaryapp.repository;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user", schema = "salaryApp")
-public class UserDAO {
+@Table(name = "appuser")
+public class User {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "salary")
-    private Long salary;
+    private Double salary;
 
-    protected UserDAO() {
+    protected User() {
     }
 
-    public UserDAO(String name, Long salary) {
+    public User(String name, Double salary) {
         this.name = name;
         this.salary = salary;
     }
@@ -32,11 +32,11 @@ public class UserDAO {
         this.name = name;
     }
 
-    public double getSalary() {
+    public Double getSalary() {
         return salary;
     }
 
-    public void setSalary(Long salary) {
+    public void setSalary(Double salary) {
         this.salary = salary;
     }
 
