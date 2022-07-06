@@ -1,15 +1,17 @@
 package com.salarytracker.salaryapp.service;
 
+import com.salarytracker.salaryapp.controller.model.SortCriteria;
 import com.salarytracker.salaryapp.controller.model.UserDTO;
 import com.salarytracker.salaryapp.controller.model.UserRequestParams;
 import com.salarytracker.salaryapp.controller.model.UserResponse;
+import com.salarytracker.salaryapp.exception.UserException;
 import com.salarytracker.salaryapp.repository.User;
 import com.salarytracker.salaryapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -18,14 +20,11 @@ public class UserService {
 
     public UserResponse getUsersBasedOnFilters(UserRequestParams userRequestParams) {
         List<User> userList = userRepository.findBySalary(userRequestParams.getMin(), userRequestParams.getMax());
-//        if (userRequestParams.getSort() != null && userRequestParams.getSort().isEmpty()) {
-//        }
-
-        List<UserDTO>userDTOList = userList.stream().map(this::convertToUserDTO).collect(Collectors.toList());
+        List<UserDTO> userDTOList = userList.stream().map(this::convertToUserDTO).toList();
 
         int offset = userRequestParams.getOffset();
         if (offset > userDTOList.size()) {
-            throw new RuntimeException("Offset is larger than the number of results");
+            throw new UserException("Offset is larger than the number of results");
         }
         if (offset > 0)
             userDTOList = userDTOList.subList(offset, userDTOList.size());
@@ -33,11 +32,30 @@ public class UserService {
                 || userRequestParams.getLimit() == 0
                 ? userDTOList.size() : userRequestParams.getLimit();
         userDTOList = userDTOList.subList(0, limit);
-
+        userDTOList = sortResults(userDTOList, userRequestParams.getSortCriteria());
         return new UserResponse(userDTOList);
     }
 
     private UserDTO convertToUserDTO(User user) {
         return new UserDTO(user.getName(), user.getSalary());
+    }
+
+    private List<UserDTO> sortResults(List<UserDTO> userDTOList, SortCriteria sortCriteria) {
+        if (sortCriteria != null) {
+            switch(sortCriteria) {
+                case NAME:
+                    userDTOList = userDTOList.stream().sorted(Comparator.comparing(UserDTO::getName)).toList();
+                    break;
+
+                case SALARY:
+                    userDTOList = userDTOList.stream().sorted(Comparator.comparing(UserDTO::getSalary)).toList();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        return userDTOList;
     }
 }

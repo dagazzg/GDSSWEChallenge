@@ -1,65 +1,69 @@
 package com.salarytracker.salaryapp.controller.model;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 
+
 public class UserRequestParams {
+    @DecimalMin("0.0")
+    private double min;
+    @DecimalMin("0.0")
+    private double max = 4000.0;
     @Min(0)
-    private Double min = 0.0;
-    private Double max = 4000.0;
+    private int offset;
     @Min(0)
-    private Integer offset = 0;
-    @Min(1)
-    private Integer limit = 0;
-    private String sort;
+    private int limit;
+    //TODO: Handle illegal sortcriteria
+    private SortCriteria sortCriteria;
 
     public UserRequestParams() {
     }
 
-    public UserRequestParams(Double min, Double max, Integer offset, Integer limit, String sort) {
+    public UserRequestParams(double min, double max, int offset, int limit, SortCriteria sortCriteria) {
         this.min = min;
         this.max = max;
         this.offset = offset;
         this.limit = limit;
-        this.sort = sort;
+        this.sortCriteria = sortCriteria;
     }
 
-    public Double getMin() {
+    public double getMin() {
         return min;
     }
 
-    public void setMin(Double min) {
+    public void setMin(double min) {
         this.min = min;
     }
 
-    public Double getMax() {
+    public double getMax() {
         return max;
     }
 
-    public void setMax(Double max) {
+    public void setMax(double max) {
         this.max = max;
     }
 
-    public Integer getOffset() {
+    public int getOffset() {
         return offset;
     }
 
-    public void setOffset(Integer offset) {
+    public void setOffset(int offset) {
         this.offset = offset;
     }
 
-    public Integer getLimit() {
+    public int getLimit() {
         return limit;
     }
 
-    public void setLimit(Integer limit) {
+    public void setLimit(int limit) {
         this.limit = limit;
     }
 
-    public String getSort() {
-        return sort;
+    public SortCriteria getSortCriteria() {
+        return sortCriteria;
     }
 
-    public void setSort(String sort) {
-        this.sort = sort;
+    public void setSortCriteria(SortCriteria sortCriteria) {
+        this.sortCriteria = sortCriteria;
     }
 }
