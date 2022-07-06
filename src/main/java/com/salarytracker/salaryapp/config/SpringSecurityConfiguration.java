@@ -18,10 +18,11 @@ public class SpringSecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((auths) -> auths
-                        .anyRequest().authenticated()
+                .authorizeHttpRequests(auths -> auths
+                        .anyRequest().permitAll()
                 )
                 .httpBasic(withDefaults());
+        http.csrf().disable();
         return http.build();
     }
 

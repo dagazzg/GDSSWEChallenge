@@ -1,10 +1,17 @@
 package com.salarytracker.salaryapp.controller.model;
 
-public class UserDTO {
-    private String name;
-    private Double salary;
+import com.opencsv.bean.CsvBindByName;
 
-    public UserDTO(String name, Double salary) {
+public class UserDTO {
+    @CsvBindByName(column = "Name")
+    private String name;
+    @CsvBindByName(column = "Salary")
+    private double salary;
+
+    public UserDTO() {
+    }
+
+    public UserDTO(String name, double salary) {
         this.name = name;
         this.salary = salary;
     }
@@ -17,11 +24,11 @@ public class UserDTO {
         this.name = name;
     }
 
-    public Double getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 }
