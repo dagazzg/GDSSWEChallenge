@@ -4,6 +4,7 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.salarytracker.salaryapp.controller.model.UploadResponse;
 import com.salarytracker.salaryapp.controller.model.UserDTO;
+import com.salarytracker.salaryapp.controller.verifier.UserDTOVerifier;
 import com.salarytracker.salaryapp.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,11 +40,13 @@ public class UploadController {
             CsvToBean<UserDTO> csvToBean = new CsvToBeanBuilder<UserDTO>(reader)
                     .withType(UserDTO.class)
                     .withIgnoreLeadingWhiteSpace(true)
+                    .withVerifier(new UserDTOVerifier())
                     .build();
 
             List<UserDTO> userDTOList = csvToBean.parse();
             uploadService.saveFile(userDTOList);
         }
+//        uploadService.saveUsers(file);
         return new ResponseEntity<>(new UploadResponse(1), HttpStatus.OK);
     }
 }
