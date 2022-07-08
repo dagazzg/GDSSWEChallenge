@@ -1,6 +1,9 @@
+## Run info
+Can be directly run from Intellij using the included run config, otherwise run `mvnw spring-boot:run`
+
 ## Minimum Requirements 
-OpenJDK 18 or other Version 18-based (Zulu, Amazon etc)
-Maven for building and dependency management
+JAVA_HOME set to OpenJDK 18 or other Version 18-based (Zulu, Amazon etc)
+Use maven wrapper included
 
 ### What kind of testing would you perform on the application in addition to unit testing?
 Integration / E2E tests:
