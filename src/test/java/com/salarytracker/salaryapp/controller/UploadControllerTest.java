@@ -1,5 +1,7 @@
 package com.salarytracker.salaryapp.controller;
 
+import com.opencsv.exceptions.CsvConstraintViolationException;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.salarytracker.salaryapp.service.UploadService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.io.FileInputStream;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,6 +54,7 @@ class UploadControllerTest {
     void rejectDataTest() throws Exception {
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/dataToBeRejected.csv");
         MockMultipartFile mockMultipartFile = new MockMultipartFile("file", fileInputStream);
+        doThrow(new CsvConstraintViolationException()).when(uploadService).processCsvFile(any());
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/upload")
                         .file(mockMultipartFile)
@@ -73,6 +79,7 @@ class UploadControllerTest {
     @Test
     @DisplayName("Uploading file with non-number salary should return 400")
     void rejectSalaryDataTest() throws Exception {
+        doThrow(new CsvDataTypeMismatchException()).when(uploadService).processCsvFile(any());
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/rejectSalaryData.csv");
         MockMultipartFile mockMultipartFile = new MockMultipartFile("file", fileInputStream);
 

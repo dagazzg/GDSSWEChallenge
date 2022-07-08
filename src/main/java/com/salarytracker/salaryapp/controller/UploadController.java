@@ -3,6 +3,7 @@ package com.salarytracker.salaryapp.controller;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.exceptions.CsvConstraintViolationException;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.salarytracker.salaryapp.controller.model.UploadResponse;
 import com.salarytracker.salaryapp.controller.model.UserDTO;
 import com.salarytracker.salaryapp.controller.verifier.UserDTOVerifier;
@@ -32,21 +33,9 @@ public class UploadController {
     UploadService uploadService;
 
     @PostMapping
-    public ResponseEntity<UploadResponse> postUploadUserData(@RequestParam("file") MultipartFile file) throws IOException {
-        if (file.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File is empty");
-        }
-
-        try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            CsvToBean<UserDTO> csvToBean = new CsvToBeanBuilder<UserDTO>(reader)
-                    .withType(UserDTO.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .withVerifier(new UserDTOVerifier())
-                    .build();
-
-            List<UserDTO> userDTOList = csvToBean.parse();
-            uploadService.saveFile(userDTOList);
-        }
+    public ResponseEntity<UploadResponse> postUploadUserData(@RequestParam("file") MultipartFile file) throws IOException, CsvConstraintViolationException, CsvDataTypeMismatchException {
+        uploadService.processCsvFile(file);
+        // this is always 1 because 0 is returned by the ExceptionHandler
         return new ResponseEntity<>(new UploadResponse(1), HttpStatus.OK);
     }
 }
