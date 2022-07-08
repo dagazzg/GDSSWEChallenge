@@ -1,5 +1,6 @@
 package com.salarytracker.salaryapp.controller.model;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 
@@ -14,7 +15,7 @@ public class UserRequestParams {
     @Min(0)
     private int limit;
     //TODO: Handle illegal sortcriteria
-    private SortCriteria sortCriteria;
+    private SortCriteria sort;
 
     public UserRequestParams() {
     }
@@ -24,7 +25,7 @@ public class UserRequestParams {
         this.max = max;
         this.offset = offset;
         this.limit = limit;
-        this.sortCriteria = sortCriteria;
+        this.sort = sortCriteria;
     }
 
     public double getMin() {
@@ -59,11 +60,11 @@ public class UserRequestParams {
         this.limit = limit;
     }
 
-    public SortCriteria getSortCriteria() {
-        return sortCriteria;
+    public SortCriteria getSort() {
+        return sort;
     }
 
-    public void setSortCriteria(SortCriteria sortCriteria) {
-        this.sortCriteria = sortCriteria;
+    public void setSort(SortCriteria sort) {
+        this.sort = sort;
     }
 }

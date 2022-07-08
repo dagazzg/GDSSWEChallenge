@@ -32,7 +32,7 @@ public class UserService {
                 || userRequestParams.getLimit() == 0
                 ? userDTOList.size() : userRequestParams.getLimit();
         userDTOList = userDTOList.subList(0, limit);
-        userDTOList = sortResults(userDTOList, userRequestParams.getSortCriteria());
+        userDTOList = sortResults(userDTOList, userRequestParams.getSort());
         return new UserResponse(userDTOList);
     }
 
