@@ -45,8 +45,35 @@ class UploadControllerTest {
     }
 
     @Test
-    void badDataTest() throws Exception {
-        FileInputStream fileInputStream = new FileInputStream("src/test/resources/badData.csv");
+    @DisplayName("Uploading file with invalid name should return 400")
+    void rejectDataTest() throws Exception {
+        FileInputStream fileInputStream = new FileInputStream("src/test/resources/dataToBeRejected.csv");
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("file", fileInputStream);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/upload")
+                        .file(mockMultipartFile)
+                        .contentType("multipart/form-data")
+                        .with(csrf()))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Uploading file with negative salary should still be accepted")
+    void invalidSalaryDataTest() throws Exception {
+        FileInputStream fileInputStream = new FileInputStream("src/test/resources/invalidSalaryData.csv");
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("file", fileInputStream);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/upload")
+                        .file(mockMultipartFile)
+                        .contentType("multipart/form-data")
+                        .with(csrf()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Uploading file with non-number salary should return 400")
+    void rejectSalaryDataTest() throws Exception {
+        FileInputStream fileInputStream = new FileInputStream("src/test/resources/rejectSalaryData.csv");
         MockMultipartFile mockMultipartFile = new MockMultipartFile("file", fileInputStream);
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/upload")
