@@ -25,15 +25,13 @@ public class UploadService {
     @Autowired
     UserRepository userRepository;
 
-    public void saveValidUsers(List<UserDTO> userDTOList) {
-        List<User> users = userDTOList.stream().map(this::convertToUserRepo).toList();
-        users.stream().forEach(user -> userRepository.save(user));
+    public void uploadUsersUsingCsv(MultipartFile file) throws IOException, CsvConstraintViolationException, CsvDataTypeMismatchException {
+        List<UserDTO> userDTOList = processCsv(file);
+        saveValidUsers(userDTOList);
     }
 
-    public void processCsvFile(MultipartFile file) throws IOException, CsvConstraintViolationException, CsvDataTypeMismatchException {
-        if (file.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File is empty");
-        }
+    private List<UserDTO> processCsv(MultipartFile file) throws IOException, CsvConstraintViolationException, CsvDataTypeMismatchException {
+        List<UserDTO> userDTOList;
 
         try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             CsvToBean<UserDTO> csvToBean = new CsvToBeanBuilder<UserDTO>(reader)
@@ -42,9 +40,15 @@ public class UploadService {
                     .withVerifier(new UserDTOVerifier())
                     .build();
 
-            List<UserDTO> userDTOList = csvToBean.parse();
-            saveValidUsers(userDTOList);
+            userDTOList = csvToBean.parse();
         }
+
+        return userDTOList;
+    }
+
+    private void saveValidUsers(List<UserDTO> userDTOList) {
+        List<User> users = userDTOList.stream().map(this::convertToUserRepo).toList();
+        users.stream().forEach(user -> userRepository.save(user));
     }
 
     private User convertToUserRepo(UserDTO userDTO) {

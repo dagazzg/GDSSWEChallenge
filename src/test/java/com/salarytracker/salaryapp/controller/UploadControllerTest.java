@@ -9,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpMethod;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -20,9 +19,7 @@ import java.io.FileInputStream;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -52,9 +49,9 @@ class UploadControllerTest {
     @Test
     @DisplayName("Uploading file with invalid name should return 400")
     void rejectDataTest() throws Exception {
-        FileInputStream fileInputStream = new FileInputStream("src/test/resources/dataToBeRejected.csv");
+        FileInputStream fileInputStream = new FileInputStream("src/test/resources/rejectNameData.csv");
         MockMultipartFile mockMultipartFile = new MockMultipartFile("file", fileInputStream);
-        doThrow(new CsvConstraintViolationException()).when(uploadService).processCsvFile(any());
+        doThrow(new CsvConstraintViolationException()).when(uploadService).uploadUsersUsingCsv(any());
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/upload")
                         .file(mockMultipartFile)
@@ -79,7 +76,7 @@ class UploadControllerTest {
     @Test
     @DisplayName("Uploading file with non-number salary should return 400")
     void rejectSalaryDataTest() throws Exception {
-        doThrow(new CsvDataTypeMismatchException()).when(uploadService).processCsvFile(any());
+        doThrow(new CsvDataTypeMismatchException()).when(uploadService).uploadUsersUsingCsv(any());
         FileInputStream fileInputStream = new FileInputStream("src/test/resources/rejectSalaryData.csv");
         MockMultipartFile mockMultipartFile = new MockMultipartFile("file", fileInputStream);
 

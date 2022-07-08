@@ -8,7 +8,7 @@ public class UserDTOVerifier implements BeanVerifier<UserDTO> {
 
     @Override
     public boolean verifyBean(UserDTO userDTO) throws CsvConstraintViolationException {
-        if (userDTO.getName().isEmpty()) {
+        if (userDTO.getName() == null || userDTO.getName().isEmpty()) {
             throw new CsvConstraintViolationException("Data in CSV is invalid");
         }
 
