@@ -22,10 +22,11 @@ public class SpringSecurityConfiguration {
                         .anyRequest().permitAll()
                 )
                 .httpBasic(withDefaults());
-        http.csrf().disable();
+        http.csrf().disable(); //NOTE: this disables CSRF protection... but unless you want to configure the csrf header manually everytime in Postman it has to be disabled
         return http.build();
     }
 
+    // basic auth isn't used cause we permitAll above, but an admin user exists if we wanna use it, and the controller tests are configured to use it
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails user = User.withDefaultPasswordEncoder()
