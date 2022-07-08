@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SalaryAppApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="com.salarytracker.salaryapp.SalaryAppApplication" />
+    <module name="salaryApp" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.salarytracker.salaryapp.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
