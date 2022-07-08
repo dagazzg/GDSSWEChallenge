@@ -2,6 +2,7 @@ package com.salarytracker.salaryapp.controller;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.exceptions.CsvConstraintViolationException;
 import com.salarytracker.salaryapp.controller.model.UploadResponse;
 import com.salarytracker.salaryapp.controller.model.UserDTO;
 import com.salarytracker.salaryapp.controller.verifier.UserDTOVerifier;
@@ -46,7 +47,6 @@ public class UploadController {
             List<UserDTO> userDTOList = csvToBean.parse();
             uploadService.saveFile(userDTOList);
         }
-//        uploadService.saveUsers(file);
         return new ResponseEntity<>(new UploadResponse(1), HttpStatus.OK);
     }
 }

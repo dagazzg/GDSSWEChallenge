@@ -53,6 +53,6 @@ class UploadControllerTest {
                         .file(mockMultipartFile)
                         .contentType("multipart/form-data")
                         .with(csrf()))
-                .andExpect(status().isOk());
+                .andExpect(status().isBadRequest());
     }
 }
