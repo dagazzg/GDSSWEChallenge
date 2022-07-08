@@ -1,6 +1,5 @@
 package com.salarytracker.salaryapp.controller.model;
 
-import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 

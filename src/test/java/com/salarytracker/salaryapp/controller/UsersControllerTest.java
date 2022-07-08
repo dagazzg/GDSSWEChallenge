@@ -100,14 +100,14 @@ class UsersControllerTest {
     }
 
     @Test
-    @DisplayName("Should still work when sort value is illegal")
-    void wrongSortParamTest() {
+    @DisplayName("Should return error when sort is not supported")
+    void wrongSortTest() {
         webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/users")
-                        .queryParam("sort", "invalid")
+                        .queryParam("sort", "unsupported")
                         .build())
-                .exchange().expectStatus().isOk();
+                .exchange().expectStatus().isBadRequest();
     }
 
     private UserResponse mockUserServiceCall() {
